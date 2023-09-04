@@ -1,0 +1,5 @@
+*.flac
+*.mp3
+dist/
+__pycache__/
+.DS_Store
