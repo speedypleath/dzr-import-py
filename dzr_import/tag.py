@@ -24,7 +24,7 @@ def get_tracks_metadata(tracks, api_token, session_id):
 
 
 def add_track_metadata(track, metadata, path):
-        audiofile = eyed3.load(f"{path}/{track[0]} - {track[1]}.mp3")
+        audiofile = eyed3.load(f"{path}/{track[0]} - {track[1]}.flac")
         if audiofile.tag == None:
             audiofile.initTag()
 
@@ -34,7 +34,7 @@ def add_track_metadata(track, metadata, path):
         audiofile.tag.artist = metadata["artist"]
         audiofile.tag.release_date = metadata["release_date"]
         audiofile.tag.track_num = metadata["track_number"]
-        audiofile.tag.file_name = f"{track[0]} - {track[1]}.mp3"
+        audiofile.tag.file_name = f"{track[0]} - {track[1]}.flac"
 
         image_url = f"https://e-cdn-images.dzcdn.net/images/cover/{metadata['album_art']}/1024x1024-000000-100-0-0.jpg"
         image_data = requests.get(image_url, timeout=60).content

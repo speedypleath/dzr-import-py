@@ -33,11 +33,11 @@ def get_cdns(tokens, user_license):
                         headers={'Content-Type': 'application/json', 'Accept':'application/json'},
                         data=json.dumps({
                             'track_tokens': tokens,
-                            'license_token': user_license,
+                            'license_token': 'AAAAAmT5A7xlDMo8ws9SPEw2V5aDskFX98i_130mpanETn9dcvhSMKEg0l89KAQ4XVbbVhf5O6IrVj6GbcDaLVFwHr9TGd2-MErElvInnftM2d_9XcJYxfeoTavVB2iL0zWsw55KyUP6uCGUzLlE8xcuGRw',
                             'media': [{
                                 'type': 'FULL', 'formats': [{
                                     'cipher': 'BF_CBC_STRIPE',
-                                    'format': 'MP3_128',
+                                    'format': 'FLAC',
                                 }]
                                 }],
                             }))

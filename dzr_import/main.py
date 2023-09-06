@@ -10,7 +10,7 @@ from dzr_import.tracks import get_cdns, get_session_id, get_tracks_data, get_tra
 def download_tracks(cdns, tracks):
     for cdn, track in zip(cdns, tracks):
         res = requests.get(cdn, stream=True)
-        with open(f"output/{track[0]} - {track[1]}_encrypted.mp3", 'wb') as f:
+        with open(f"output/{track[0]} - {track[1]}_encrypted.flac", 'wb') as f:
             for chunk in res.iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
@@ -18,16 +18,16 @@ def download_tracks(cdns, tracks):
 
 def decrypt_tracks(tracks, ids):
     for track, id in zip(tracks, ids):
-        with open(f"output/{track[0]} - {track[1]}_encrypted.mp3", 'rb') as fh, open(f"output/{track[0]} - {track[1]}.mp3", 'wb') as fo:
+        with open(f"output/{track[0]} - {track[1]}_encrypted.flac", 'rb') as fh, open(f"output/{track[0]} - {track[1]}.flac", 'wb') as fo:
             decryptfile(fh, calcbfkey(id).encode('utf-8'), fo)
-        os.remove(f"output/{track[0]} - {track[1]}_encrypted.mp3")
+        os.remove(f"output/{track[0]} - {track[1]}_encrypted.flac")
 
 def run():
-    files = [f"tracks/{track}" for track in os.listdir('tracks')]
+    files = filter(lambda track: track[-4:] == '.mp3', [f"tracks/{track}" for track in os.listdir('tracks')])
     tracks = []
     with exiftool.ExifToolHelper() as et:
         metadata = et.get_metadata(files)
-        tracks = [(d['Vorbis:Artist'], d['Vorbis:Title']) for d in metadata]
+        tracks = [(d['ID3:Artist'], d['ID3:Title']) for d in metadata]
 
     tracks_ids = get_tracks_ids(tracks)
     session_id = get_session_id()
